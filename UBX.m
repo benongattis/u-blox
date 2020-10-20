@@ -140,7 +140,7 @@ if header1 == 181
                      rf(rfcount).noiseperms(j) = read(s,1,"uint16");
                      rf(rfcount).agccnt(j) = read(s,1,"uint16");
                      rf(rfcount).jamind(j) = read(s,1,"uint8");
-                     rf(rfcount).ofsi(j) = read(s,1,"int8");
+                     rf(rfcount).ofsi(j) = read(s,1,"int8"); 
                      rf(rfcount).magi(j) = read(s,1,"uint8");
                      rf(rfcount).ofsq(j) = read(s,1,"int8");
                      rf(rfcount).magq(j) = read(s,1,"uint8");
