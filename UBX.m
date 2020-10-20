@@ -8,101 +8,101 @@ clear s
 rfcount=0;
 satcount=0;
 
-while toc(runtime)<2
+while true
 clear rf pvt sat
 pvtcount=0;
 rfcount=0;
 satcount=0;
-% rf(84600).rawlength = uint16(0);
-% pvt(84600).length2=int16(0);
-% sat(84600).length=uint16(0);
-% for i = 1:86400
-% rf(i).rawlength=uint16(0);
-% rf(i).version = uint8(0);
-% rf(i).blocks = uint8(0);
-% rf(i).reserved1=uint8([0,0]);
-% rf(i).blockid=uint8([0,0]);
-% rf(i).flags=int8([0,0]);
-% rf(i).antstatus=uint8([0,0]);
-% rf(i).antpower=uint8([0,0]);
-% rf(i).poststatus=uint32([0,0]);
-% rf(i).reserved2=uint8([0,0]);
-% rf(i).reserved3=uint8([0,0]);
-% rf(i).reserved4=uint8([0,0]);
-% rf(i).reserved5=uint8([0,0]);
-% rf(i).noiseperms=uint16([0,0]);
-% rf(i).agccnt=uint16([0,0]);
-% rf(i).jamind=uint8([0,0]);
-% rf(i).ofsi=int8([0,0]);
-% rf(i).magi=uint8([0,0]);
-% rf(i).ofsq=int8([0,0]);
-% rf(i).magq=uint8([0,0]);
-% rf(i).reserved6=uint8([0,0]);
-% rf(i).reserved7=uint8([0,0]);
-% rf(i).reserved8=uint8([0,0]);
-% rf(i).cka=uint8(0);
-% rf(i).ckb=uint8(0);
-% 
-% pvt(i).length2=int16(0);
-% pvt(i).itow=uint32(0);
-% pvt(i).year=uint16(0);
-% pvt(i).month=uint8(0);
-% pvt(i).day=uint8(0);
-% pvt(i).hour=uint8(0);
-% pvt(i).min=uint8(0);
-% pvt(i).sec=uint8(0);
-% pvt(i).valid=uint8(0);
-% pvt(i).tacc=uint32(0);
-% pvt(i).nano=int32(0);
-% pvt(i).fixtype=uint8(0);
-% pvt(i).flags1=uint8(0);
-% pvt(i).flags2=uint8(0);
-% pvt(i).numsv=uint8(0);
-% pvt(i).lon=int32(0);
-% pvt(i).lat=int32(0);
-% pvt(i).height=int32(0);
-% pvt(i).hmsl=int32(0);
-% pvt(i).hacc=uint32(0);
-% pvt(i).vacc=uint32(0);
-% pvt(i).veln=int32(0);
-% pvt(i).vele=int32(0);
-% pvt(i).veld=int32(0);
-% pvt(i).gspeed=int32(0);
-% pvt(i).headmot=int32(0);
-% pvt(i).sacc=uint32(0);
-% pvt(i).headacc=uint32(0);
-% pvt(i).pdop=uint16(0);
-% pvt(i).flags3=uint8(0);
-% pvt(i).reserved4=uint8(0);
-% pvt(i).reserved5=uint8(0);
-% pvt(i).reserved6=uint8(0);
-% pvt(i).reserved7=uint8(0);
-% pvt(i).reserved8=uint8(0);
-% pvt(i).headveh=int32(0);
-% pvt(i).magdec=int16(0);
-% pvt(i).magacc=uint16(0);
-% pvt(i).cka=uint8(0);
-% pvt(i).ckb=uint8(0);
-% 
-% sat(i).length=uint16(0);
-% sat(i).itow=uint32(0);
-% sat(i).version=uint8(0);
-% sat(i).numsat=uint8(0);
-% sat(i).reserved1=uint8(0);
-% sat(i).reserved2=uint8(0);
-% sat(i).gnssid=uint8(zeros(1,75));
-% sat(i).satid=uint8(zeros(1,75));
-% sat(i).cno=uint8(zeros(1,75));
-% sat(i).elev=int8(zeros(1,75));
-% sat(i).azim=int16(zeros(1,75));
-% sat(i).preres=int16(zeros(1,75));
-% sat(i).flags=uint32(zeros(1,75));
-% sat(i).cka=uint8(0); 
-% sat(i).ckb=uint8(0);
-% end
+rf(84600).rawlength = uint16(0);
+pvt(84600).length2=int16(0);
+sat(84600).length=uint16(0);
+for i = 1:86400
+rf(i).rawlength=uint16(0);
+rf(i).version = uint8(0);
+rf(i).blocks = uint8(0);
+rf(i).reserved1=uint8([0,0]);
+rf(i).blockid=uint8([0,0]);
+rf(i).flags=int8([0,0]);
+rf(i).antstatus=uint8([0,0]);
+rf(i).antpower=uint8([0,0]);
+rf(i).poststatus=uint32([0,0]);
+rf(i).reserved2=uint8([0,0]);
+rf(i).reserved3=uint8([0,0]);
+rf(i).reserved4=uint8([0,0]);
+rf(i).reserved5=uint8([0,0]);
+rf(i).noiseperms=uint16([0,0]);
+rf(i).agccnt=uint16([0,0]);
+rf(i).jamind=uint8([0,0]);
+rf(i).ofsi=int8([0,0]);
+rf(i).magi=uint8([0,0]);
+rf(i).ofsq=int8([0,0]);
+rf(i).magq=uint8([0,0]);
+rf(i).reserved6=uint8([0,0]);
+rf(i).reserved7=uint8([0,0]);
+rf(i).reserved8=uint8([0,0]);
+rf(i).cka=uint8(0);
+rf(i).ckb=uint8(0);
+
+pvt(i).length2=int16(0);
+pvt(i).itow=uint32(0);
+pvt(i).year=uint16(0);
+pvt(i).month=uint8(0);
+pvt(i).day=uint8(0);
+pvt(i).hour=uint8(0);
+pvt(i).min=uint8(0);
+pvt(i).sec=uint8(0);
+pvt(i).valid=uint8(0);
+pvt(i).tacc=uint32(0);
+pvt(i).nano=int32(0);
+pvt(i).fixtype=uint8(0);
+pvt(i).flags1=uint8(0);
+pvt(i).flags2=uint8(0);
+pvt(i).numsv=uint8(0);
+pvt(i).lon=int32(0);
+pvt(i).lat=int32(0);
+pvt(i).height=int32(0);
+pvt(i).hmsl=int32(0);
+pvt(i).hacc=uint32(0);
+pvt(i).vacc=uint32(0);
+pvt(i).veln=int32(0);
+pvt(i).vele=int32(0);
+pvt(i).veld=int32(0);
+pvt(i).gspeed=int32(0);
+pvt(i).headmot=int32(0);
+pvt(i).sacc=uint32(0);
+pvt(i).headacc=uint32(0);
+pvt(i).pdop=uint16(0);
+pvt(i).flags3=uint8(0);
+pvt(i).reserved4=uint8(0);
+pvt(i).reserved5=uint8(0);
+pvt(i).reserved6=uint8(0);
+pvt(i).reserved7=uint8(0);
+pvt(i).reserved8=uint8(0);
+pvt(i).headveh=int32(0);
+pvt(i).magdec=int16(0);
+pvt(i).magacc=uint16(0);
+pvt(i).cka=uint8(0);
+pvt(i).ckb=uint8(0);
+
+sat(i).length=uint16(0);
+sat(i).itow=uint32(0);
+sat(i).version=uint8(0);
+sat(i).numsat=uint8(0);
+sat(i).reserved1=uint8(0);
+sat(i).reserved2=uint8(0);
+sat(i).gnssid=uint8(zeros(1,75));
+sat(i).satid=uint8(zeros(1,75));
+sat(i).cno=uint8(zeros(1,75));
+sat(i).elev=int8(zeros(1,75));
+sat(i).azim=int16(zeros(1,75));
+sat(i).preres=int16(zeros(1,75));
+sat(i).flags=uint32(zeros(1,75));
+sat(i).cka=uint8(0); 
+sat(i).ckb=uint8(0);
+end
 
 tic
-while toc<3600
+while true
 packetrf(56)= double(zeros);
 packetpvt(96)=double(zeros);
 
@@ -140,7 +140,7 @@ if header1 == 181
                      rf(rfcount).noiseperms(j) = read(s,1,"uint16");
                      rf(rfcount).agccnt(j) = read(s,1,"uint16");
                      rf(rfcount).jamind(j) = read(s,1,"uint8");
-                     rf(rfcount).ofsi(j) = read(s,1,"int8"); 
+                     rf(rfcount).ofsi(j) = read(s,1,"int8");
                      rf(rfcount).magi(j) = read(s,1,"uint8");
                      rf(rfcount).ofsq(j) = read(s,1,"int8");
                      rf(rfcount).magq(j) = read(s,1,"uint8");
@@ -395,7 +395,7 @@ for i =1:datalength
 clocks(i) = pvt(i).hour + ":" + pvt(i).min + ":" + pvt(i).sec;
 end
 name = "Date_"+num2str(pvt(1).year)+"_"+num2str(pvt(1).month)+"_"+num2str(pvt(1).day)+"_"+num2str(pvt(1).hour)+"_"+num2str(pvt(1).min)+"_"+num2str(pvt(1).sec);
-%save(name,'rf','sat','pvt');
+save(name,'rf','sat','pvt');
 name2="Date:"+num2str(pvt(1).year)+"/"+num2str(pvt(1).month)+"/"+num2str(pvt(1).day)+" "+num2str(pvt(1).hour)+":"+num2str(pvt(1).min)+":"+num2str(pvt(1).sec);
 
 
@@ -607,6 +607,6 @@ legend('Total','GPS','SBAS','Galileo','BeiDou','QZSS','GLONASS', 'Location','sou
 % legend('>45','45>15','15>','Location','southeastoutside');
 % grid on
 
-% saveas(figure1,name,'fig');
-% saveas(figure1,name,'jpg');
+saveas(figure1,name,'fig');
+saveas(figure1,name,'jpg');
 end
