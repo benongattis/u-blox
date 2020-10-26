@@ -399,8 +399,9 @@ save(name,'rf','sat','pvt');
 name2="Date:"+num2str(pvt(1).year)+"/"+num2str(pvt(1).month)+"/"+num2str(pvt(1).day)+" "+num2str(pvt(1).hour)+":"+num2str(pvt(1).min)+":"+num2str(pvt(1).sec);
 
 
+
 %%  Plotting 
-figure1 = tiledlayout(3,2);
+figure1 = tiledlayout(5,2);
 sgtitle(name2);
 %agc
 agc=vertcat(rf(1:datalength).agccnt)/81.91;
@@ -410,7 +411,7 @@ nexttile
 plot(agc1,'-o');
 xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
 xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
-ylim([40,80]);
+ylim([min(agc(:))-4,max(agc(:))+4]);
 xlim([1,datalength]);
 title("AGC")
 xlabel("UTC Time");
@@ -442,10 +443,10 @@ legend('High Band','Low Band','Location','southeastoutside');
 %latitude
 lat = vertcat(pvt.lat)*10^(-7);
 nexttile
-plot(lat,'-o');
+plot(lat(1:datalength),'-o');
 xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
 xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
-ylim([min(lat),max(lat)]);
+ylim([min(lat(1:datalength)),max(lat(1:datalength))]);
 xlim([1,datalength]);
 title("Latitude");
 xlabel("UTC Time");
@@ -454,10 +455,10 @@ grid on
 %longitude
 lon = vertcat(pvt.lon)*10^(-7);
 nexttile
-plot(lon,'-o');
+plot(lon(1:datalength),'-o');
 xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
 xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
-ylim([min(lon),max(lon)]);
+ylim([min(lon(1:datalength)),max(lon(1:datalength))]);
 xlim([1,datalength]);
 title("Longitude");
 xlabel("UTC Time");
@@ -465,11 +466,11 @@ ylabel("Degrees");
 grid on
 %height
 height = vertcat(pvt.height)/1000;
-nexttile;
-plot(height,'-o');
+nexttile
+plot(height(1:datalength),'-o');
 xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
 xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
-ylim([min(height),max(height)]);
+ylim([min(height(1:datalength))-1,max(height(1:datalength))+1]);
 xlim([1,datalength]);
 title("Meters Above Ellipsoid");
 xlabel("UTC Time");
@@ -486,13 +487,41 @@ gal = zeros(datalength,1);
 bds = zeros(datalength,1);
 qzss = zeros(datalength,1);
 glo = zeros(datalength,1);
+sbascount = 1;
+sbasid = zeros(1,3);
+sbascno = zeros(datalength,3);
+
+sbasaz = zeros(datalength,3);
+
+sbasel = zeros(datalength,3);
 for i = 1:datalength
+
     for j= 1:sat(i).numsat
         if sat(i).gnssid(j) == 0
             gps(i) = gps(i) + 1;
         end
         if sat(i).gnssid(j) == 1
             sbas(i) = sbas(i) + 1;
+            if sat(i).satid(j) == sbasid(1,1)
+                sbascno(i,1) = sat(i).cno(j);
+                sbasaz(i,1) = sat(i).azim(j);
+                sbasel(i,1) = sat(i).elev(j);
+            elseif sat(i).satid(j) == sbasid(1,2)
+                sbascno(i,2) = sat(i).cno(j);
+                sbasaz(i,2) = sat(i).azim(j);
+                sbasel(i,2) = sat(i).elev(j);
+            elseif sat(i).satid(j) == sbasid(1,3)
+                sbascno(i,3) = sat(i).cno(j);
+                sbasaz(i,3) = sat(i).azim(j);
+                sbasel(i,3) = sat(i).elev(j);
+            else
+                sbasid(1,sbascount) = sat(i).satid(j);
+                sbascount = sbascount + 1;
+                sbascno(i,sbascount) = sat(i).cno(j);
+                sbasaz(i,sbascount) = sat(i).azim(j);
+                sbasel(i,sbascount) = sat(i).elev(j);
+            end
+
         end
         if sat(i).gnssid(j) == 2
             gal(i) = gal(i) + 1;
@@ -509,6 +538,41 @@ for i = 1:datalength
         
     end      
 end
+
+gpsmean=mean(gps);
+gpsmax = max(gps);
+gpsmin = min(gps);
+gpsstd = std(gps);
+
+sbasmean = mean(sbas);
+sbasmax = max(sbas);
+sbasmin = min(sbas);
+sbasstd = std(sbas);
+
+galmean = mean(gal);
+galmax = max(gal);
+galmin = min(gal);
+galstd = std(gal);
+
+bdsmean = mean(bds);
+bdsmax = max(bds);
+bdsmin = min(bds);
+bdsstd = std(bds);
+
+qzssmean = mean(qzss);
+qzssmax = max(qzss);
+qzssmin = min(qzss);
+qzssstd = std(qzss);
+
+glomean = mean(glo);
+glomax = max(glo);
+glomin = min(glo);
+glostd = std(glo);
+sub2 = "GPS(" + round(gpsmax,2) + ", " + round(gpsmin,2) + ", " + round(gpsmean,2) + ", " + round(gpsstd,2) + ")   SBAS(" + round(sbasmax,2) + ", " + round(sbasmin,2) + ", " + round(sbasmean,2) + ", " + round(sbasstd,2) +  ")   GALILEO(" + round(galmax,2) + ", " + round(galmin,2) + ", " + round(galmean,2) + ", " + round(galstd,2) + ")   BEIDOU(" + round(bdsmax,2) + ", " + round(bdsmin,2) + ", " + round(bdsmean,2) + ", " + round(bdsstd,2) + ")   QZSS(" + round(qzssmax,2) + ", " + round(qzssmin,2) + ", " + round(qzssmean,2) + ", " + round(qzssstd,2) + ")   GLONASS(" + round(glomax,2) + ", " + round(glomin,2) + ", " + round(glomean,2) + ", " + round(glostd,2) + ")";
+sub1 = "Constellation(Max,Min,Mean,Std):";
+sub = {sub1,sub2};
+subtitle(figure1,sub);
+
 nexttile
 plot(sv,'-o');
 
@@ -530,6 +594,62 @@ hold off
 grid on
 legend('Total','GPS','SBAS','Galileo','BeiDou','QZSS','GLONASS', 'Location','southeastoutside');
 
+
+
+ nexttile
+
+        
+ 
+plot(sbasel(:,1),'o');
+
+xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
+xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
+ylim([min(sbasel(:))-1,max(sbasel(:))+1]);
+xlim([1,datalength]);
+title("SBAS Elevation");
+xlabel("UTC Time");
+ylabel("Degrees");
+hold on
+plot(sbasel(:,2),'o');
+plot(sbasel(:,3),'o');
+hold off
+grid on
+legend("S"+sbasid(1),"S"+sbasid(2),"S"+sbasid(3), 'Location','southeastoutside');
+
+
+nexttile
+plot(sbascno(:,1),'o');
+
+xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
+xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
+ylim([min(sbascno(:))-1,max(sbascno(:))+1]);
+xlim([1,datalength]);
+title("SBAS CNO");
+xlabel("UTC Time");
+ylabel("dBHz");
+hold on
+plot(sbascno(:,2),'o');
+plot(sbascno(:,3),'o');
+hold off
+grid on
+legend("S"+sbasid(1),"S"+sbasid(2),"S"+sbasid(3), 'Location','southeastoutside');
+
+nexttile
+plot(sbasaz(:,1),'o');
+
+xticks([0,floor(datalength/3),floor(2*datalength/3),datalength]);
+xticklabels({clocks(1),clocks(floor(datalength/3)),clocks(floor(2*datalength/3)),clocks(datalength)});
+ylim([min(sbasaz(:))-10,max(sbasaz(:))+10]);
+xlim([1,datalength]);
+title("SBAS Azimuth");
+xlabel("UTC Time");
+ylabel("Degrees");
+hold on
+plot(sbasaz(:,2),'o');
+plot(sbasaz(:,3),'o');
+hold off
+grid on
+legend("S"+sbasid(1),"S"+sbasid(2),"S"+sbasid(3), 'Location','southeastoutside');
 
 %cno sats
 %num of sats with CNo >50dB-Hz (in green), num of sats with 40 dB-Hz <CNo <=50 dB-Hz (in blue),
@@ -606,7 +726,9 @@ legend('Total','GPS','SBAS','Galileo','BeiDou','QZSS','GLONASS', 'Location','sou
 % xlabel("UTC Time");
 % legend('>45','45>15','15>','Location','southeastoutside');
 % grid on
-
+nexttile
+plot(zeros(100,1));
 saveas(figure1,name,'fig');
 saveas(figure1,name,'jpg');
 end
+clear s
